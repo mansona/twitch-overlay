@@ -1,0 +1,15 @@
+<div class="timer" {{did-insert this.animate}}>
+  <svg class="base-timer__svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+    <g class="base-timer__circle">
+      <path id="base-timer-path-remaining" fill="none" stroke-dasharray="283" stroke-dashoffset={{this.dashoffset}} class="base-timer__path-remaining red" d="
+          M 50, 50
+          m -45, 0
+          a 45,45 0 1,0 90,0
+          a 45,45 0 1,0 -90,0
+        "></path>
+    </g>
+  </svg>
+  <span class="label">
+    {{this.text}}
+  </span>
+</div>
