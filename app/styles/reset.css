@@ -1,0 +1,15 @@
+body {
+  margin: 0;
+  padding: 0;
+}
+
+h1 {
+  display: inline-block;
+}
+
+ul {
+  margin:0;
+  padding: 0;
+  text-indent: 0;
+  list-style-type: none;
+}
