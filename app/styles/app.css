@@ -1,2 +1,31 @@
 @import 'reset.css';
+@import 'tasklist.css';
 @import 'timer.css';
+
+:root {
+  --color-purple: #53007f;
+  --color-turquoise: #00d896;
+}
+
+body {
+  font-family: montserrat;
+}
+
+h1 {
+  background-color: var(--color-purple);
+  color: var(--color-turquoise);
+  padding: .5em 2em;
+  margin: 10px 0;
+}
+
+h1 span {
+  color: white;
+}
+
+.sidebar {
+  width: 400px;
+}
+
+.footer {
+  height: 130px;
+}
