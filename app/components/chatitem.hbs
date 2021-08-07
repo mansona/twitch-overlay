@@ -1,0 +1,28 @@
+<div class="chatMsg" data-from="{from}" data-id="{messageId}" style={{this.computedStyle}}>
+  <div class="chatBg"></div>
+  <div class="outerClip">
+    <div class="innerClip">
+      <div class="chatBorder" style={{this.borderStyle}}></div>
+    </div>
+  </div>
+  <div class="scaleHolder">
+    <span class="message leftMsg">
+      <span class="inner">{{@message}}</span>
+    </span>
+    <span class="meta" style={{this.colourStyle}}>
+      <span class="inner">
+        <span class="badges">
+          {{#each this.badgeImages as |badge|}}
+            <img src={{badge}} alt="">
+          {{/each}}
+
+        </span>
+        <span class="name">{{@from}}</span>
+        <span class="separator"></span>
+      </span>
+    </span>
+    <span class="message rightMsg">
+      <span class="inner">{{{this.messageHtml}}}</span>
+    </span>
+  </div>
+</div>

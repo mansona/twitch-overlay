@@ -1,0 +1,11 @@
+<div id="log" class="sl__chat__layout chatbox">
+  {{#each this.messages as |message index|}}
+    <Chatitem
+      @message={{message.message}}
+      @from={{message.from}}
+      @colour={{message.colour}}
+      @index={{index}}
+      @context={{message.context}}
+    />
+  {{/each}}
+</div>
