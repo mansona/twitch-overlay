@@ -1,6 +1,7 @@
 @import 'reset.css';
 @import 'tasklist.css';
 @import 'timer.css';
+@import 'chatbox.css';
 
 :root {
   --color-purple: #53007f;
@@ -28,4 +29,8 @@ h1 span {
 
 .footer {
   height: 130px;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 1400px;
 }
