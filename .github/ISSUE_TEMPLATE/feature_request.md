@@ -2,7 +2,8 @@
 name: Feature request
 about: Suggest an idea for this my custom overlay
 title: ''
-labels: ''
+labels: 
+  - 'Feature Request'
 assignees: ''
 
 ---
