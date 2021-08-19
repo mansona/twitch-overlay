@@ -108,7 +108,7 @@ module.exports = function (app) {
       client.say(target, `@${context.username} You rolled a ${num}`);
       console.log(`* Executed ${commandName} command`);
     } else {
-      if (io) {
+      if (io && context.username !== 'pretzelrocks') {
         // if this console.log is useful to get your user_id for the .env file
         // console.log({ context, msg, emotes: context.emotes });
         io.emit('chat message', { context, msg });
