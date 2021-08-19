@@ -33,3 +33,18 @@
   height: 400px;
   top: 0;
 }
+
+.fullscreen-timer {
+  font-weight: 900;
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  color: #50007a;
+}
+
+.fullscreen-timer.timer .label {
+  font-size: 40vw;
+  justify-content: left;
+  height: 100vh;
+  color: #50007a;
+}
