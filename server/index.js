@@ -59,8 +59,24 @@ module.exports = function (app) {
 
   app.get('/login', (req, res) => {
     res.redirect(
-      `https://id.twitch.tv/oauth2/authorize?client_id=${process.env.TWITCH_CLIENT_ID}&redirect_uri=http://localhost:4200/token&response_type=token`
+      `https://id.twitch.tv/oauth2/authorize?client_id=${process.env.TWITCH_CLIENT_ID}&redirect_uri=http://localhost:4300/token&response_type=token&scope=channel:read:subscriptions`
     );
+  });
+
+  app.get('/subscriptions', (req, res) => {
+    return fetch(
+      `https://api.twitch.tv/helix/subscriptions?broadcaster_id=${process.env.CHANNEL_ID}`,
+      {
+        headers: {
+          Authorization: `Bearer ${process.env.BEARER_TOKEN}`,
+          'Client-Id': process.env.TWITCH_CLIENT_ID,
+        },
+      }
+    )
+      .then((res) => res.json())
+      .then((json) => {
+        res.json(json);
+      });
   });
 
   app.get('/badges', (req, res) => {
