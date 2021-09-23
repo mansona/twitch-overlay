@@ -1,0 +1,52 @@
+.goal {
+  margin: 0 5px;
+  text-transform: uppercase;
+  box-sizing: content-box;
+  height: 30px;
+  position: relative;
+  border-radius: 25px;
+  /* background-color: white; */
+}
+
+.goal > .bar {
+  z-index: 0;
+  display: block;
+  height: 100%;
+  border-top-right-radius: 8px;
+  border-bottom-right-radius: 8px;
+  border-top-left-radius: 20px;
+  border-bottom-left-radius: 20px;
+  background-color: var(--color-purple);
+  position: absolute;
+  float: left;
+  overflow: hidden;
+}
+
+.goal > .bar.completed {
+  border-radius: 20px;
+}
+
+.goal .stats {
+  display: flex;
+  height: 30px;
+  align-items: center;
+  justify-content: space-between;
+  margin: 0 10px;
+  color: var(--color-turquoise);
+  font-weight: bold;
+}
+
+.goal .stats span {
+  z-index: 1;
+}
+
+.goal .text {
+  position: absolute;
+  margin-left: auto;
+  margin-right: auto;
+  left: 0;
+  right: 0;
+  text-align: center;
+  vertical-align: middle;
+  line-height: 30px;
+}

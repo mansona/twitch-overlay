@@ -2,6 +2,7 @@
 @import 'tasklist.css';
 @import 'timer.css';
 @import 'chatbox.css';
+@import 'goal.css';
 
 :root {
   --color-purple: #53007f;
