@@ -17,6 +17,21 @@ export default class TimerComponent extends Component {
   constructor() {
     super(...arguments);
 
+    if (this.args.persistanceId) {
+      let time = parseInt(localStorage.getItem(this.args.persistanceId));
+
+      if (!time) {
+        localStorage.setItem(this.args.persistanceId, Date.now());
+        time = Date.now();
+      }
+
+      this.startingTime = performance.now() - (Date.now() - time);
+    }
+
+    if (!this.startingTime) {
+      this.startingTime = performance.now();
+    }
+
     let minutes = Math.floor(this.args.seconds / 60);
     let seconds = Math.floor(this.args.seconds % 60);
 
@@ -30,15 +45,14 @@ export default class TimerComponent extends Component {
 
   @action
   rafCallback(timestamp) {
-    if (!this.startingTime) {
-      this.startingTime = timestamp;
-    }
-
     let secondsElapsed = Math.floor((timestamp - this.startingTime) / 1000);
     this.secondsLeft = this.args.seconds - secondsElapsed;
 
     if (this.secondsLeft < 0) {
       this.text = 'GO!';
+      if (this.args.persistanceId) {
+        localStorage.removeItem(this.args.persistanceId);
+      }
       return;
     }
 
