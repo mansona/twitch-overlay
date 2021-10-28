@@ -3,6 +3,7 @@
 @import 'timer.css';
 @import 'chatbox.css';
 @import 'goal.css';
+@import 'dashboard.css';
 
 :root {
   --color-purple: #53007f;
