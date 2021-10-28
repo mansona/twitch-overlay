@@ -1,10 +1,9 @@
 import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
-
-import io from 'socket.io/client-dist/socket.io.js';
+import { inject as service } from '@ember/service';
 
 export default class ChatboxComponent extends Component {
-  socket = io();
+  @service socket;
 
   @tracked
   messages = [];
