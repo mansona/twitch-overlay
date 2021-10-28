@@ -49,8 +49,12 @@ module.exports = function (app) {
         },
       });
 
-      io.on('connection', () => {
+      io.on('connection', (socket) => {
         console.log('a sockect has connected');
+
+        socket.on('client message', (msg) => {
+          io.emit(msg);
+        });
       });
     }
 
