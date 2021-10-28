@@ -1,0 +1,5 @@
+<ul class="tasklist">
+  {{#each @tasks as |task index|}}
+    <li class={{if (eq index this.activeIndex) "active"}}>{{task}}</li>
+  {{/each}}
+</ul>

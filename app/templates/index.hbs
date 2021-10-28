@@ -1,12 +1,12 @@
 <h1>Open Source <span>LIVE</span></h1>
 
 <div class="sidebar">
-  <ul class="tasklist">
-    <li>Introduction</li>
-    <li>jQuery app - Ember conversion</li>
-    <li class="active">Add Persistance to the timer!!</li>
-
-  </ul>
+  <TaskList @tasks={{
+    array
+    "Introduction"
+    "Task list button"
+    "ember-cli-addon-docs migrator"
+  }}/>
 
   <Timer @seconds={{1500}} @persistanceId="main-overlay-timer"/>
   <Goal @text="Subscribers goal" @target={{15}} @current={{@model.total}}/>
