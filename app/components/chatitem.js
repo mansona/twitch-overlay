@@ -60,4 +60,11 @@ export default class ChatitemComponent extends Component {
 
     return messageHTML;
   }
+
+  get isEmojiOnly() {
+    let tmp = document.createElement('div');
+    tmp.innerHTML = this.messageHtml;
+
+    return tmp.textContent.trim().length === 0;
+  }
 }

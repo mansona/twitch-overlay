@@ -41,7 +41,6 @@
   position: absolute;
   width: 350px;
   min-width: 350px;
-  margin: 10px 0px;
   display: table;
   padding: 20px 40px 20px 20px;
   border-radius: var(--borderRadius);
@@ -80,7 +79,8 @@
   transform-origin: left top;
   animation: metaAnim .2s forwards;
   animation-delay: .6s;
-  display: inline-block;
+  display: flex;
+  gap: 10px;
   z-index: 99;
 }
 @keyframes metaAnim {
@@ -218,6 +218,12 @@
 .right .rightMsg {
   display: none;
   visibility: visible;
+}
+
+.rightMsg.emoji-only img {
+  height: 80px;
+  width: 80px;
+  min-height: 80px;
 }
 
 .right .leftMsg {

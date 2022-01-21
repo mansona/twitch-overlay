@@ -32,7 +32,7 @@ h1 span {
 .footer {
   height: 130px;
   position: absolute;
-  bottom: 0;
+  bottom: 10px;
   right: 0;
   width: 1400px;
 }
