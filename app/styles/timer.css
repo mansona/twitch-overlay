@@ -48,3 +48,7 @@
   height: 100vh;
   color: #50007a;
 }
+
+.fullscreen-timer .base-timer__circle {
+  display: none;
+}
