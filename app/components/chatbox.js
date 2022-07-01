@@ -27,6 +27,12 @@ export default class ChatboxComponent extends Component {
 
     this.messages = loadMessages();
 
+    this.socket.on('clear chat', () => {
+      this.messages = [];
+
+      storeMessages(this.messages);
+    });
+
     this.socket.on('chat message', (msg) => {
       this.messages = [
         {
