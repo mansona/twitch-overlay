@@ -42,7 +42,7 @@ export default class ChatboxComponent extends Component {
           context: msg.context,
         },
         // this essentially only keeps a max of 5 of the old messages
-        ...this.messages.slice(0, 5),
+        ...this.messages.slice(0, 10),
       ];
 
       storeMessages(this.messages);

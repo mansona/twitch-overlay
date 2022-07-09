@@ -1,4 +1,5 @@
-<div id="log" class="sl__chat__layout chatbox">
+<div id="log" class="sl__chat__layout chatbox {{if @vertical "vertical"}}" ...attributes>
+
   {{#each this.messages as |message index|}}
     <Chatitem
       @message={{message.message}}
@@ -8,4 +9,7 @@
       @context={{message.context}}
     />
   {{/each}}
+  {{#if @vertical}}
+    <div class="chat-spacer"></div>
+  {{/if}}
 </div>

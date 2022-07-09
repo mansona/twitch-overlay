@@ -9,4 +9,5 @@ export default class Router extends EmberRouter {
 Router.map(function () {
   this.route('timer', { path: 'timer/:seconds' });
   this.route('dashboard');
+  this.route('chat');
 });
