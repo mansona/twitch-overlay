@@ -45,13 +45,18 @@
   /* position: absolute; */
   animation: animate-from-left 1s;
   width: var(--chatMsgWidth);
-  min-width: 350px;
+  min-width: var(--chatMsgWidth);
+  /* min-width: 350px; */
   display: table;
   padding: 20px 40px 20px 20px;
   border-radius: var(--borderRadius);
   overflow: hidden;
   word-break: break-all;
   transition: left .5s;
+}
+
+#log.vertical .chatMsg {
+  width: 100%;
 }
 
 #log>div {
