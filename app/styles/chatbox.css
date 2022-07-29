@@ -18,6 +18,7 @@
 .chatbox {
   display: flex;
   overflow: hidden;
+  max-height: 130px;
   gap: 20px;
   /* background: {background_color}; */
   font-weight: 700;
@@ -51,7 +52,6 @@
   padding: 20px 40px 20px 20px;
   border-radius: var(--borderRadius);
   overflow: hidden;
-  word-break: break-all;
   transition: left .5s;
 }
 
@@ -89,7 +89,6 @@
   transform-origin: left top;
   animation: metaAnim .2s forwards;
   animation-delay: .6s;
-  display: flex;
   gap: 10px;
   z-index: 99;
 }
@@ -205,10 +204,6 @@
   100% {
     clip-path: polygon(0% 0%, 50% 0%, 51% 100%, 0% 100%)
   }
-}
-
-.inner {
-  display: inline-block;
 }
 
 #log.right {
