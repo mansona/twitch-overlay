@@ -29,6 +29,10 @@
 }
 
 .chatbox.vertical {
+  max-height: none;
+}
+
+.chatbox.vertical {
   flex-direction: column-reverse;
   height: 100vh;
 }
