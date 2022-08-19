@@ -3,6 +3,7 @@ require('dotenv').config();
 
 const tmi = require('tmi.js');
 const fetch = require('node-fetch');
+const sanitizeHtml = require('sanitize-html');
 
 // Define configuration options
 const opts = {
@@ -131,7 +132,14 @@ module.exports = function (app) {
       if (io && context.username !== 'pretzelrocks') {
         // if this console.log is useful to get your user_id for the .env file
         // console.log({ context, msg, emotes: context.emotes });
-        io.emit('chat message', { context, msg });
+
+        io.emit('chat message', {
+          context,
+          // we had to make sure to sanitize our input because dragoonbood is a haxor
+          msg: sanitizeHtml(msg, {
+            allowedTags: [],
+          }),
+        });
       }
     }
   }
