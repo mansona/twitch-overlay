@@ -67,4 +67,33 @@ export default class ChatitemComponent extends Component {
 
     return tmp.textContent.trim().length === 0;
   }
+
+  scroll(element) {
+    // 1. measure available height without scroll
+    // 2. measure height of text contents
+    // 3. decide if you need to animate
+    // 4. calculate duration (based on height)
+    // 5. call element.animate
+    const startScrollingAt = 100;
+    const currentHeight = element.scrollHeight;
+
+    if (currentHeight > startScrollingAt) {
+      const duration = 6000; // 3 seconds
+      element.animate(
+        [
+          {
+            transform: 'translateY(0)',
+          },
+          {
+            transform: `translateY(-${currentHeight - startScrollingAt}px)`,
+          },
+        ],
+        {
+          duration,
+          iterations: Infinity,
+          easing: 'ease-in-out',
+        }
+      );
+    }
+  }
 }
