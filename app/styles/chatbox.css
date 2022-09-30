@@ -52,7 +52,6 @@
   width: var(--chatMsgWidth);
   min-width: var(--chatMsgWidth);
   /* min-width: 350px; */
-  display: table;
   padding: 20px 40px 20px 20px;
   border-radius: var(--borderRadius);
   overflow: hidden;
@@ -61,6 +60,7 @@
 
 #log.vertical .chatMsg {
   width: 100%;
+  max-height: 130px;
 }
 
 #log>div {
