@@ -1,10 +1,22 @@
 import Component from '@glimmer/component';
 import { action } from '@ember/object';
 import { tracked } from '@glimmer/tracking';
+import { inject as service } from '@ember/service';
 
 export default class TimerComponent extends Component {
   @tracked text;
   @tracked secondsLeft;
+  @tracked snoozed;
+
+  @service socket;
+
+  get playSound() {
+    return this.args.playSound && this.timerDone && !this.snoozed;
+  }
+
+  get timerDone() {
+    return this.secondsLeft < 0;
+  }
 
   get percentDone() {
     return this.secondsLeft / this.args.seconds;
@@ -16,6 +28,14 @@ export default class TimerComponent extends Component {
 
   constructor() {
     super(...arguments);
+
+    this.socket.on('snooze timer', () => {
+      this.snoozed = true;
+
+      setTimeout(() => {
+        this.snoozed = false;
+      }, 60 * 1000);
+    });
 
     if (this.args.persistanceId) {
       let time = parseInt(localStorage.getItem(this.args.persistanceId));
@@ -48,7 +68,7 @@ export default class TimerComponent extends Component {
     let secondsElapsed = Math.floor((timestamp - this.startingTime) / 1000);
     this.secondsLeft = this.args.seconds - secondsElapsed;
 
-    if (this.secondsLeft < 0) {
+    if (this.timerDone) {
       this.text = 'GO!';
       if (this.args.persistanceId) {
         localStorage.removeItem(this.args.persistanceId);
