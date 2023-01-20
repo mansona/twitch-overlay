@@ -5,6 +5,10 @@
 @import 'goal.css';
 @import 'dashboard.css';
 
+html {
+  background-color: black;
+}
+
 :root {
   --color-purple: #53007f;
   --color-turquoise: #00d896;
