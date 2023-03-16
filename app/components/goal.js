@@ -9,5 +9,6 @@ export default class GoalComponent extends Component {
     if (this.completedPercent >= 100) {
       return 'completed';
     }
+    return '';
   }
 }
