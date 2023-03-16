@@ -1,5 +1,5 @@
 import Service from '@ember/service';
-import io from 'socket.io/client-dist/socket.io.js';
+import { io } from 'socket.io-client';
 
 export default class SocketService extends Service {
   socket = io();
