@@ -54,6 +54,27 @@ module.exports = function (app) {
         console.log('a sockect has connected');
 
         socket.on('client message', (msg) => {
+          if (msg === 'fake-notification') {
+            io.emit('notification', {
+              meta: {
+                message_id: 'Uw5TCRNKMiodDl4Pvbh5kuEa5WgR8JJJP397X-w3pDs=',
+                message_type: 'notification',
+                message_timestamp: '2023-05-26T15:22:24.77777743Z',
+                subscription_type: 'channel.follow',
+                subscription_version: '2',
+              },
+              content: {
+                user_id: '42269136',
+                user_login: 'dragoonblood',
+                user_name: 'dragoonblood',
+                broadcaster_user_id: '167191019',
+                broadcaster_user_login: 'real_ate',
+                broadcaster_user_name: 'real_ate',
+                followed_at: '2023-05-26T15:22:24.777768605Z',
+              },
+            });
+            return;
+          }
           io.emit(msg);
         });
       });
@@ -64,7 +85,7 @@ module.exports = function (app) {
 
   app.get('/login', (req, res) => {
     res.redirect(
-      `https://id.twitch.tv/oauth2/authorize?client_id=${process.env.TWITCH_CLIENT_ID}&redirect_uri=http://localhost:4300/token&response_type=token&scope=channel:read:subscriptions`
+      `https://id.twitch.tv/oauth2/authorize?client_id=${process.env.TWITCH_CLIENT_ID}&redirect_uri=http://localhost:4300/token&response_type=token&scope=channel:read:subscriptions%20moderator:read:followers`
     );
   });
 
@@ -145,3 +166,63 @@ module.exports = function (app) {
   }
   client.on('message', onMessageHandler);
 };
+
+const WebSocket = require('ws');
+
+const ws = new WebSocket('wss://eventsub.wss.twitch.tv/ws');
+
+ws.on('error', console.error);
+
+ws.on('open', function open() {
+  console.log('opened');
+});
+
+ws.on('close', function close() {
+  console.log('notification websocket has closed');
+});
+
+async function subscribeForNotifications(session_id) {
+  await fetch('https://api.twitch.tv/helix/eventsub/subscriptions', {
+    method: 'POST', // *GET, POST, PUT, DELETE, etc.
+    headers: {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${process.env.BEARER_TOKEN}`,
+      'Client-Id': process.env.TWITCH_CLIENT_ID,
+    },
+    body: JSON.stringify({
+      type: 'channel.follow',
+      version: '2',
+      condition: {
+        broadcaster_user_id: process.env.CHANNEL_ID,
+        moderator_user_id: process.env.CHANNEL_ID,
+      },
+      transport: {
+        method: 'websocket',
+        session_id,
+      },
+    }),
+  });
+}
+
+ws.on('message', async function message(message) {
+  const data = JSON.parse(message);
+
+  switch (data.metadata.message_type) {
+    case 'session_welcome':
+      console.log('gonna sub for notifications');
+      await subscribeForNotifications(data.payload.session.id);
+      break;
+    case 'session_keepalive':
+      // ignore keepalives
+      break;
+    case 'notification':
+      io.emit('notification', data.metadata, data.payload.event);
+      break;
+    default:
+      console.log(
+        'unknown message',
+        data.metadata.message_type,
+        message.toString()
+      );
+  }
+});
