@@ -1,0 +1,7 @@
+{{#each this.notifications as |notification|}}
+  {{#if (eq notification.meta.subscription_type "channel.follow")}}
+    <Notification::Follow @data={{notification.content}}/>
+  {{else}}
+    <h1>Unknown Notification {{notification.meta.subscription_type}} 🤔</h1>
+  {{/if}}
+{{/each}}
