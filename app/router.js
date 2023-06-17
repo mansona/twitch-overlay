@@ -10,4 +10,5 @@ Router.map(function () {
   this.route('timer', { path: 'timer/:seconds' });
   this.route('dashboard');
   this.route('chat');
+  this.route('notifications');
 });

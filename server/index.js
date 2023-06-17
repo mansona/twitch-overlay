@@ -259,7 +259,10 @@ ws.on('message', async function message(message) {
       // ignore keepalives
       break;
     case 'notification':
-      io.emit('notification', data.metadata, data.payload.event);
+      io.emit('notification', {
+        meta: data.metadata,
+        content: data.payload.event,
+      });
       break;
     default:
       console.log(
