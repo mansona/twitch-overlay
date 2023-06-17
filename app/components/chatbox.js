@@ -2,19 +2,7 @@ import Component from '@glimmer/component';
 import { tracked } from '@glimmer/tracking';
 import { inject as service } from '@ember/service';
 
-function getKey() {
-  const startOfDay = new Date();
-  startOfDay.setHours(0, 0, 0, 0);
-  return startOfDay.toString();
-}
-
-function storeMessages(messages) {
-  localStorage.setItem(getKey(), JSON.stringify(messages));
-}
-
-function loadMessages() {
-  return JSON.parse(localStorage.getItem(getKey()) ?? '[]');
-}
+import { storeData, loadData } from '../utils/local-storage';
 
 export default class ChatboxComponent extends Component {
   @service socket;
@@ -25,12 +13,12 @@ export default class ChatboxComponent extends Component {
   constructor() {
     super(...arguments);
 
-    this.messages = loadMessages();
+    this.messages = loadData('messages');
 
     this.socket.on('clear chat', () => {
       this.messages = [];
 
-      storeMessages(this.messages);
+      storeData('messages', this.messages);
     });
 
     this.socket.on('chat message', (msg) => {
@@ -45,7 +33,7 @@ export default class ChatboxComponent extends Component {
         ...this.messages.slice(0, 10),
       ];
 
-      storeMessages(this.messages);
+      storeData('messages', this.messages);
     });
   }
 }
