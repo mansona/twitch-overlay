@@ -85,7 +85,7 @@ module.exports = function (app) {
 
   app.get('/login', (req, res) => {
     res.redirect(
-      `https://id.twitch.tv/oauth2/authorize?client_id=${process.env.TWITCH_CLIENT_ID}&redirect_uri=http://localhost:4300/token&response_type=token&scope=channel:read:subscriptions%20moderator:read:followers`
+      `https://id.twitch.tv/oauth2/authorize?client_id=${process.env.TWITCH_CLIENT_ID}&redirect_uri=http://localhost:4300/token&response_type=token&scope=channel:read:subscriptions%20moderator:read:followers%20bits:read`
     );
   });
 
@@ -182,26 +182,69 @@ ws.on('close', function close() {
 });
 
 async function subscribeForNotifications(session_id) {
-  await fetch('https://api.twitch.tv/helix/eventsub/subscriptions', {
-    method: 'POST', // *GET, POST, PUT, DELETE, etc.
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${process.env.BEARER_TOKEN}`,
-      'Client-Id': process.env.TWITCH_CLIENT_ID,
+  const transport = {
+    method: 'websocket',
+    session_id,
+  };
+  const broadcaster_user_id = process.env.CHANNEL_ID;
+  const moderator_user_id = process.env.CHANNEL_ID;
+  let queries = [
+    {
+      type: 'channel.subscribe',
+      version: '1',
+      condition: {
+        broadcaster_user_id,
+      },
+      transport,
     },
-    body: JSON.stringify({
+    {
       type: 'channel.follow',
       version: '2',
       condition: {
-        broadcaster_user_id: process.env.CHANNEL_ID,
-        moderator_user_id: process.env.CHANNEL_ID,
+        broadcaster_user_id,
+        moderator_user_id,
       },
-      transport: {
-        method: 'websocket',
-        session_id,
+      transport,
+    },
+    {
+      type: 'channel.subscription.gift',
+      version: '1',
+      condition: {
+        broadcaster_user_id,
       },
-    }),
-  });
+      transport,
+    },
+    {
+      type: 'channel.subscription.message',
+      version: '1',
+      condition: {
+        broadcaster_user_id,
+      },
+      transport,
+    },
+    {
+      type: 'channel.cheer',
+      version: '1',
+      condition: {
+        broadcaster_user_id,
+      },
+      transport,
+    },
+  ];
+
+  for (let query of queries) {
+    console.log(`subscribing to notification ${query.type}`);
+    await fetch('https://api.twitch.tv/helix/eventsub/subscriptions', {
+      method: 'POST', // *GET, POST, PUT, DELETE, etc.
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${process.env.BEARER_TOKEN}`,
+        'Client-Id': process.env.TWITCH_CLIENT_ID,
+      },
+      body: JSON.stringify(query),
+    });
+    console.log('done subscribing');
+  }
 }
 
 ws.on('message', async function message(message) {
