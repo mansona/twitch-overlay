@@ -1,0 +1,23 @@
+name: Ember Asset Sizes
+
+on: [pull_request]
+
+jobs:
+  build:
+
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
+    - name: Install Node
+      uses: actions/setup-node@v3
+      with:
+        node-version: 16.x
+        cache: npm
+    - uses: btecu/ember-asset-size-action@bugsbunny
+      with:
+        repo-token: "${{ secrets.GITHUB_TOKEN }}"
+        show-total-size-diff: "yes"
